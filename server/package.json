@@ -1,0 +1,23 @@
+{
+  "name": "cross-drop",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "dev": "bun --watch index.ts",
+    "start": "bun run index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@types/express": "^5.0.5",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}
