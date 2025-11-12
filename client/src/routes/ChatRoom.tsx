@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import Navbar from "@/components/Navbar";
+import { Clipboard, Check } from "lucide-react";
+import { toast } from "sonner";
 import {
   Card,
   CardHeader,
@@ -12,8 +14,44 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { BsEmojiAngry } from "react-icons/bs";
 
 const socket = io("https://5ddr3hbb-8080.inc1.devtunnels.ms/");
+
+function CopyRoomLink({ roomID }: { roomID: string | undefined }) {
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    if (!roomID) return;
+
+    // ✅ Build full HTTPS link dynamically
+    const link = `${window.location.origin.replace(
+      /^http:/,
+      "https:"
+    )}/room/${roomID}/chat`;
+
+    navigator.clipboard.writeText(link);
+    setCopied(true);
+    toast.success("Room link copied!");
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={handleCopy}
+      title="Copy Room Link"
+      className="text-white"
+    >
+      {copied ? (
+        <Check className="h-4 w-4 text-green-500" />
+      ) : (
+        <Clipboard className="h-4 w-4" />
+      )}
+    </Button>
+  );
+}
 
 function ChatRoom() {
   const { roomID } = useParams();
@@ -32,11 +70,19 @@ function ChatRoom() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
+  //someone joins from a shared link
+  useEffect(() => {
+    if (roomID) localStorage.setItem("currentRoomID", roomID);
+  }, [roomID]);
+
   // Socket setup
   useEffect(() => {
     socket.emit("join-room", roomID);
     socket.on("receive-message", (data) => {
-      setChat((prev) => [...prev, `${data.sender || "Anonymous"}: ${data.text}`]);
+      setChat((prev) => [
+        ...prev,
+        `${data.sender || "Anonymous"}: ${data.text}`,
+      ]);
     });
     return () => {
       socket.off("receive-message");
@@ -62,24 +108,23 @@ function ChatRoom() {
   return (
     <>
       <Navbar />
-
-      {/* 🧭 Centered Full-Screen Layout */}
       <div className="flex justify-center items-center min-h-[calc(100vh-64px)] w-full pt-[64px] px-4 bg-background text-foreground">
         <Card className="w-full max-w-3xl min-h-[80vh] border border-border rounded-xl shadow-lg flex flex-col bg-card transition-all duration-300 hover:shadow-primary/20">
-          
           {/* Header */}
           <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-border p-4 bg-muted/30">
             <div>
               <CardTitle className="text-2xl font-semibold text-foreground">
-                💬 Chat Room
+                Chat zone
               </CardTitle>
-              <CardDescription className="text-muted-foreground">
-                Room ID: <span className="font-medium">{roomID}</span>
+              <CardDescription className="text-muted-foreground text-sm mt-1 flex items-center gap-2">
+                Share this room via this Link:{" "}
+                <span className="text-gray-500">{roomID}</span>
+                <CopyRoomLink roomID={roomID} />
               </CardDescription>
             </div>
 
             {/* Username Editor */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-5">
               {editing ? (
                 <>
                   <Input
@@ -97,7 +142,9 @@ function ChatRoom() {
                 </>
               ) : (
                 <>
-                  <p className="text-sm text-muted-foreground">👤 {username}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {[" 🤡 ", " 🥸 ", " 🗿 ", " 💀 "][Math.floor(Math.random() * 4)]} 
+                    {username}</p>
                   <Button
                     onClick={() => setEditing(true)}
                     variant="outline"
@@ -115,7 +162,7 @@ function ChatRoom() {
           <CardContent className="flex-1 p-4 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
             {chat.length === 0 ? (
               <p className="italic text-center text-muted-foreground">
-                No messages yet. Start the conversation 👇
+                Start the conversation...
               </p>
             ) : (
               chat.map((msg, i) => {
@@ -153,7 +200,7 @@ function ChatRoom() {
             />
             <Button
               onClick={sendMessage}
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              className="bg-primary text-primary dark:text-white"
             >
               Send
             </Button>

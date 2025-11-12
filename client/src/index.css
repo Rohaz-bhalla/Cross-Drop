@@ -62,8 +62,8 @@
 }
 
 .dark {
-  --background: oklch(0.17 0.04 260); /* Deep charcoal navy */
-  --foreground: oklch(0.97 0.01 260); /* Almost white text */
+   --background: oklch(0.9940 0 0);
+   --foreground: oklch(0 0 0);
 
   --card: oklch(0.21 0.03 260);
   --card-foreground: oklch(0.97 0.01 260);

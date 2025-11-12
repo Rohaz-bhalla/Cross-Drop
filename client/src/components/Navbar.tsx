@@ -50,7 +50,7 @@ function Navbar() {
 
           <li>
             <a
-              href="https://github.com/Rohaz-bhalla/CrossDrop"
+              href="https://github.com/Rohaz-bhalla/Cross-Drop"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
