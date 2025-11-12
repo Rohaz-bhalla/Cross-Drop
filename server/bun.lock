@@ -5,6 +5,7 @@
       "name": "cross-drop",
       "dependencies": {
         "@types/express": "^5.0.5",
+        "cors": "^2.8.5",
         "express": "^5.1.0",
         "socket.io": "^4.8.1",
       },
