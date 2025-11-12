@@ -14,7 +14,6 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { BsEmojiAngry } from "react-icons/bs";
 
 const socket = io("https://5ddr3hbb-8080.inc1.devtunnels.ms/");
 
