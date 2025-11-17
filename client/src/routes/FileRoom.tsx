@@ -14,7 +14,7 @@ import Navbar from "@/components/Navbar";
 import { toast } from "sonner";
 import { Check, Clipboard } from "lucide-react";
 
-const socket = io("https://5ddr3hbb-8080.inc1.devtunnels.ms/");
+const socket = io("https://cross-drop.onrender.com/");
 
 function CopyRoomLink({ roomID }: { roomID: string | undefined }) {
   const [copied, setCopied] = useState(false);
