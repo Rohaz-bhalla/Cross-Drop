@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillChatTextFill } from "react-icons/bs";
 import { GoFileSubmodule } from "react-icons/go";
 import { FaGithub } from "react-icons/fa";

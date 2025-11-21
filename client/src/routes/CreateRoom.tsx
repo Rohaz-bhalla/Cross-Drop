@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
