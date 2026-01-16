@@ -14,7 +14,9 @@ import Navbar from "@/components/Navbar";
 import { toast } from "sonner";
 import { Check, Clipboard } from "lucide-react";
 
-const socket = io("https://cross-drop.onrender.com/");
+// Use Environment Variable, or default to localhost for development
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8080";
+const socket = io(SERVER_URL)
 
 function CopyRoomLink({ roomID }: { roomID: string | undefined }) {
   const [copied, setCopied] = useState(false);

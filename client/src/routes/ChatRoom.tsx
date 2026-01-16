@@ -28,7 +28,9 @@ import {
 
 
 // Initialize socket outside to prevent re-connections on render
-const socket = io(import.meta.env.VITE_SERVER_URL || "http://localhost:8080");
+// Use Environment Variable, or default to localhost for development
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8080";
+const socket = io(SERVER_URL)
 
 interface Message {
   id: string;

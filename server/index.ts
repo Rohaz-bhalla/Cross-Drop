@@ -9,9 +9,11 @@ app.use(cors({ origin: "*" }));
 
 const server = createServer(app);
 
-//Create a socket.io server named as io
-const io = new Server(server,{
-  cors: { origin : "*" } //CORS error will not be there and, it will connect with frontend easily
+const io = new Server(server, {
+  cors: { 
+    origin: "*",
+    methods: ["GET", "POST"] // explicit methods help reduce CORS issues
+  }
 });
 
 app.get("/", ( req, res ) => {
