@@ -61,8 +61,6 @@ interface WorldProps {
   data: Position[];
 }
 
-
-
 export function Globe({ globeConfig, data }: WorldProps) {
   const globeRef = useRef<ThreeGlobe | null>(null);
   const groupRef = useRef<Group | null>(null);
@@ -122,7 +120,13 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
     const arcs = data;
     // eslint-disable-next-line prefer-const
-    let points: { size: number; order: number; color: string; lat: number; lng: number; }[] = [];
+    let points: {
+      size: number;
+      order: number;
+      color: string;
+      lat: number;
+      lng: number;
+    }[] = [];
     for (let i = 0; i < arcs.length; i++) {
       const arc = arcs[i];
       points.push({
@@ -146,9 +150,9 @@ export function Globe({ globeConfig, data }: WorldProps) {
       (v, i, a) =>
         a.findIndex((v2) =>
           ["lat", "lng"].every(
-            (k) => v2[k as "lat" | "lng"] === v[k as "lat" | "lng"],
-          ),
-        ) === i,
+            (k) => v2[k as "lat" | "lng"] === v[k as "lat" | "lng"]
+          )
+        ) === i
     );
 
     globeRef.current
@@ -187,7 +191,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
       .ringMaxRadius(defaultProps.maxRings)
       .ringPropagationSpeed(RING_PROPAGATION_SPEED)
       .ringRepeatPeriod(
-        (defaultProps.arcTime * defaultProps.arcLength) / defaultProps.rings,
+        (defaultProps.arcTime * defaultProps.arcLength) / defaultProps.rings
       );
   }, [
     isInitialized,
@@ -213,11 +217,11 @@ export function Globe({ globeConfig, data }: WorldProps) {
       const newNumbersOfRings = genRandomNumbers(
         0,
         data.length,
-        Math.floor((data.length * 4) / 5),
+        Math.floor((data.length * 4) / 5)
       );
 
       const ringsData = data
-        .filter((d, i) => newNumbersOfRings.includes(i))
+        .filter((_, i) => newNumbersOfRings.includes(i))
         .map((d) => ({
           lat: d.startLat,
           lng: d.startLng,
@@ -286,9 +290,9 @@ export function World(props: WorldProps) {
 // eslint-disable-next-line react-refresh/only-export-components
 export function hexToRgb(hex: string) {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-    return r + r + g + g + b + b; // This function expects 4 arguments, but only 3 are provided in the callback.
-  });
+  hex = hex.replace(shorthandRegex, function (_, r, g, b) {
+  return r + r + g + g + b + b;
+  }); // This function expects 4 arguments, but only 3 are provided in the callback.
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
