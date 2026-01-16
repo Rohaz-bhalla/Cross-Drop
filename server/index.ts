@@ -31,14 +31,14 @@ try {
 
     //The frontend sends a message with { roomID, text }, Server receives it, then re-sends it to everyone in that room
     socket.on("send-message", (data) => {
-      io.to(data.roomID).emit("receive-message", data);
+      socket.to(data.roomID).emit("receive-message", data);
     });
 
     //Transfer file 
     //meta = { roomID, fileName, fileType }...buffer = file data (binary)
     //The backend simply forwards that to all users in the same room.
-    socket.on("send-file", (meta, buffer) =>{
-      io.to(meta.roomID).emit("receive-file", meta, buffer)
+    socket.on("send-file", (meta, buffer) => {
+      socket.to(meta.roomID).emit("receive-file", meta, buffer);
     });
 
     //Checks when a user has left
