@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import Navbar from "@/components/Navbar";
 import { 
-  Clipboard, Check, Send, Settings2, 
+  Clipboard, Check, Settings2, 
   MessageSquare, ArrowDown, 
   ArrowUpIcon
 } from "lucide-react";
