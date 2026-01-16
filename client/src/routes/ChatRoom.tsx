@@ -7,7 +7,8 @@ import { io } from "socket.io-client";
 import Navbar from "@/components/Navbar";
 import { 
   Clipboard, Check, Send, Settings2, 
-  MessageSquare, ArrowDown 
+  MessageSquare, ArrowDown, 
+  ArrowUpIcon
 } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "motion/react";
@@ -338,7 +339,7 @@ function ChatRoom() {
                 disabled={!message.trim() || !isConnected}
                 className={`h-11 w-11 rounded-xl shrink-0 transition-all ${!message.trim() ? 'opacity-50' : 'hover:scale-105'}`}
               >
-                <Send className="h-5 w-5 text-black dark:text-white" />
+                <ArrowUpIcon className="dark: text-white" />
               </Button>
             </form>
           </CardFooter>
