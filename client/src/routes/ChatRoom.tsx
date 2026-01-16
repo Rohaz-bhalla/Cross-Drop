@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 import Navbar from "@/components/Navbar";
 import { 
   Clipboard, Check, Send, Settings2, 
@@ -28,7 +28,7 @@ import {
 
 
 // Initialize socket outside to prevent re-connections on render
-const socket: Socket = io("https://cross-drop.onrender.com/");
+const socket = io(import.meta.env.VITE_SERVER_URL || "http://localhost:8080");
 
 interface Message {
   id: string;
@@ -198,12 +198,12 @@ function ChatRoom() {
               {/* User Settings */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-9 gap-2 px-3">
-                    <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-white font-bold ${getAvatarColor(username)}`}>
+                  <Button variant="destructive" size="sm" className="h-9 gap-2 px-3">
+                    <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${getAvatarColor(username)}`}>
                       {username.charAt(0).toUpperCase()}
                     </div>
                     <span className="max-w-[80px] truncate hidden sm:inline-block">{username}</span>
-                    <Settings2 className="h-3.5 w-3.5 text-muted-foreground ml-1" />
+                    <Settings2 className="h-3.5 w-3.5 ml-1 text-white" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-80" align="end">
